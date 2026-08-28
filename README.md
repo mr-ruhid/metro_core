@@ -1,93 +1,133 @@
-August 28, 2026, 10:50:09 AM
-What We Did Together So Far:
-1. PROJECT IDEA - "metro_core"
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ruhidjavadoff/metro-core/main/assets/logo.png" alt="Metro Core Logo" width="250"/>
+  <h1>📱 Metro Core OS</h1>
+  <p><b>A modern, cross-platform operating system interface built with Flutter, designed to run on Linux-based devices.</b></p>
 
-Independent mobile OS (not Android/Web-based)
+<a href="https://github.com/ruhidjavadoff/metro-core">View Source Code</a> •
+<a href="#-how-to-build-linux--wsl">Installation Guide</a>
 
-Linux kernel + Flutter UI + C++ backend
+<br><br>
 
-.mtx package format (signed apps)
+  <p>
+    <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"></a>
+    <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart"></a>
+    <a href="https://isocpp.org/"><img src="https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++"></a>
+    <a href="https://www.linux.org/"><img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux"></a>
+    <a href="https://cmake.org/"><img src="https://img.shields.io/badge/CMake-064F8C?style=for-the-badge&logo=cmake&logoColor=white" alt="CMake"></a>
+  </p>
+</div>
 
-2. PROJECT SETUP
+<br>
 
-Created standard Flutter project: flutter create metro_core
+## 📜 About the Project
 
-Pushed to GitHub: mr-ruhid/metro_core
+**Metro Core** aims to provide a sleek, Windows Phone-inspired Modern UI with deep system integration. It bridges the gap between a beautiful frontend and low-level hardware control using **Dart FFI (Foreign Function Interface)** and **C++ native libraries**.
 
-3. STRUCTURE DECIDED
+---
 
-lib/ - Flutter UI (Dart)
+## ✨ Key Features
 
-linux/ - C++ backend (not written yet)
+| Feature | Description |
+|:---|:---|
+| 🎨 **Modern UI** | A dark-themed, responsive, tile-based design built from the ground up in Flutter. |
+| 🔌 **Deep Integration** | Uses `dart:ffi` to directly communicate with native Linux C++ libraries for hardware management. |
+| 🛡️ **Device Encryption** | Full management for Linux LUKS / dm-crypt directly from the UI settings. |
+| 📊 **System Monitoring** | Real-time tracking of Battery, Storage, CPU, RAM, Network, and Time. |
+| 🚗 **Driving Mode** | Automotive integration infrastructure (Android Auto-like) using WebSockets. |
+| 📺 **Wireless Display** | WFD support for seamless screen mirroring and discovery. |
+| 🌐 **Multi-language Ready** | Built-in `i18n` support. All UI strings are stored as keys for instant localization. |
+| 📱 **Overflow Prevention** | Adaptive screens using `SafeArea` and flexible layouts to prevent bottom overflow errors. |
 
-Using MOCK layer to test UI first
+---
 
-4. METHODOLOGY DECIDED
+## 🧠 Native Libraries (C++)
 
-MOCK mode - Write UI now with fake data
+The system relies on several C++ shared libraries located in `/usr/local/lib/`. These libraries are dynamically called via `dart:ffi`.
 
-REAL mode - Connect to C++ later
+| Library Name | Purpose |
+|:---|:---|
+| `libbattery_manager.so` | Battery level, charging status, AI protection, and bypass features. |
+| `libstorage_manager.so` | Storage capacity, used/free space, and low storage warnings. |
+| `libnotification_manager.so` | Notification settings (lock screen, banners, alarms, apps). |
+| `libphone_manager.so` | Phone number, caller ID, silence unknown, ask reason. |
+| `libwfd_manager.so` | Wireless Display (WFD) discovery and streaming protocols. |
+| `libbrightness_manager.so` | Screen brightness control and adjustment. |
+| `libabout_manager.so` | System info (kernel version, CPU, RAM). |
+| `libsecurity.so` | Device encryption (LUKS) status, enable/disable functionality. |
 
-UI written ONCE, never changes
+> **Note:** These libraries are built using CMake and copied to the system paths. The `SystemFFI` class in `lib/ffi/system_ffi.dart` handles loading them safely.
 
-5. CURRENT STATUS
+---
 
-Decided to create README.md first
+## 🔌 FFI Integration (Mock vs Real)
 
-Next: README.md → then lib/ffi/system_ffi.dart
+The `SystemFFI` class (`lib/ffi/system_ffi.dart`) utilizes a smart `USE_MOCK` flag system for seamless development:
 
-SUMMARY:
-#	What We Did	Status
-1	Project idea	✅ Done
-2	Create Flutter project	✅ Done
-3	Push to GitHub	✅ Done
-4	Decide structure	✅ Done
-5	Decide MOCK vs REAL	✅ Done
-6	Write README.md	⏳ READY
-7	system_ffi.dart (MOCK)	⏳ NEXT
+*   🟢 **`USE_MOCK = true` (Default):** All hardware data is simulated. Perfect for UI development, UI/UX testing, and debugging on non-Linux machines without needing real hardware.
+*   🔴 **`USE_MOCK = false`:** The application attempts to load the real `.so` C++ libraries and fetch actual live system data.
 
-# metro_core
+---
 
-**metro_core** — Android və ya Web əsaslı olmayan, tamamilə müstəqil, Linux nüvəsi üzərində qurulan mobil əməliyyat sistemidir.
+## 🛡️ Device Encryption & 🚗 Driving Mode
 
-## Fəlsəfə və Arxitektura
+*   **Encryption (`DeviceEncryptionService`):** Provides a UI for managing disk encryption (Linux LUKS). It connects to the `libsecurity.so` native library to check current encryption status, and allows users to enable or disable encryption (requires a PIN).
+*   **Driving Mode:** The project includes infrastructure for an Android Auto-like experience. The phone (Linux device) gathers data (music, GPS, notifications) via a C++ service (`phone_bridge.cpp`). The external display runs a Flutter UI (`driving_mode_page.dart`) that connects via WebSocket to the phone and renders the data.
 
-*   **Nüvə (Kernel):** Yüngül, mainline Linux (postmarketOS / Alpine əsaslı).
-*   **UI və Tətbiqlər:** 100% Flutter (Dart) ilə yazılır və birbaşa ARM64 Native Machine Code kimi kompilyasiya olunur.
-*   **Aparatla Əlaqə:** Flutter təbəqəsi, C++ Native Bindings və Dart FFI (Foreign Function Interface) vasitəsilə sistem servisləri ilə birbaşa əlaqə saxlayır.
-*   **Ekran (Shell):** Windows Phone Metro UI və Fluent Design ilhamlı, tam inteqrasiya olunmuş monolitik Flutter mühiti.
-*   **Tətbiq Formatı:** Sistem, xüsusi və kriptoqrafik imzalanmış `.mtx` (Metro Executable) fayllarını qəbul edir. `.apk` və ya `.deb` faylları dəstəklənmir. İmzasız tətbiqlər sistem səviyyəsində bloklanır.
-*   **Müstəqillik:** Bu layihə Android-in (AOSP) bir klonu, fork-u və ya GSI variantı DEYİLDİR. Google-un heç bir məhsulundan və lisenziyasından asılı deyildir.
+---
 
-## Texniki Quruluş və Metodologiya
+## 📂 Project Structure
 
-Layihə iki mərhələli strategiya ilə inkişaf etdirilir:
+```text
+metro_core/
+├── lib/
+│   ├── apps/
+│   │   └── settings/
+│   │       ├── system/
+│   │       │   ├── about_page.dart
+│   │       │   ├── battery_saver.dart
+│   │       │   ├── charge.dart
+│   │       │   ├── device_encryption_page.dart
+│   │       │   ├── display.dart
+│   │       │   ├── notifications.dart
+│   │       │   ├── phone.dart
+│   │       │   ├── storage.dart
+│   │       │   └── wireless_display.dart
+│   │       ├── setting_search.dart
+│   │       └── settings.dart
+│   ├── core/
+│   │   └── settings_links.dart
+│   ├── ffi/
+│   │   └── system_ffi.dart
+│   ├── screens/
+│   │   └── home/
+│   │       └── home.dart
+│   └── main.dart
+├── linux/
+│   └── (Native shared libraries are copied here)
+├── pubspec.yaml
+└── README.md
+🛠️ How to Build (Linux / WSL)
+1. Install Dependencies
+Install the required packages for building the C++ libraries:
 
-1.  **MOCK Rejim (İlkin Mərhələ):**
-    *   Bütün UI (Dart) kodu, heç bir xarici asılılıq olmadan işləyə bilməsi üçün **saxta (fake) data** ilə yazılır.
-    *   C++ tərəfdəki sistem servisləri hələ yazılmadığı üçün, Dart tərəfindəki `SystemFfi` sinfi müvəqqəti dəyərlər qaytarır.
-    *   Bu, UI-nin heç bir xəta vermədən işləməsinə imkan verir və UI kodu bir daha dəyişdirilməyəcək şəkildə sabitlənir.
+Bash
+sudo apt update
+sudo apt install cmake make g++ nlohmann-json3-dev -y
+2. Build the Native Libraries
+Navigate to each native service directory (e.g., ~/system/services/battery) and compile:
 
-2.  **REAL Rejim (İkinci Mərhələ):**
-    *   C++ tərəfdəki `.so` kitabxanaları yazıldıqdan və `linux/` qovluğuna köçürüldükdən sonra, MOCK funksiyalar real FFI çağırışları ilə əvəzlənir.
-    *   Bu mərhələdə UI-da heç bir dəyişiklik edilmir; yalnız arxa plan məntiqi (backend) dəyişir.
+Bash
+mkdir -p build && cd build
+cmake ..
+make
+sudo cp lib*.so /usr/local/lib/
+3. Run the Flutter App
+Once libraries are built and placed correctly, run the application:
 
-## Qovluq Strukturu
+Bash
+flutter pub get
+flutter run -d linux
+📄 License & Contributing
+License: © 2026 Metro Core. All rights reserved.
 
-*   `lib/` — Flutter UI (Dart) təbəqəsi.
-*   `linux/` — Native C++ kitabxanaları (`.so` faylları).
-*   `system/services/` — C++ servislərinin mənbə kodu (WSL/Ubuntu mühitində yaradılır).
-
-## Hazırkı Status (Ətraflı Cədvəl)
-
-| # | Görülən İş | Status |
-|---|------------|--------|
-| 1 | Layihə ideyası (metro_core) | ✅ Tamamlandı |
-| 2 | Flutter layihəsinin yaradılması | ✅ Tamamlandı |
-| 3 | GitHub-a yüklənməsi | ✅ Tamamlandı |
-| 4 | Strukturun müəyyənləşdirilməsi | ✅ Tamamlandı |
-| 5 | MOCK vs REAL metodologiyası | ✅ Tamamlandı |
-| 6 | README.md faylının yazılması | ✅ Tamamlandı |
-| 7 | `lib/ffi/system_ffi.dart` (MOCK) | ⏳ Sırada |
-
-
+Contributing: Contributions are highly welcome! Feel free to open issues or pull requests to improve the system architecture, add new hardware integrations, or fix bugs.

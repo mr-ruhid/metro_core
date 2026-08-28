@@ -1,7 +1,7 @@
 // lib/screens/home.dart
-
 import 'package:flutter/material.dart';
 import '../ffi/system_ffi.dart';
+import '../apps/settings/settings.dart'; // SettingsPage-i import et
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,112 +34,74 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Container(
         color: Colors.black,
-        child: Column(
-          children: [
-            // Status Bar
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    _time,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        _network == 'WiFi' ? Icons.wifi : Icons.signal_cellular_alt,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.battery_std,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '$_battery%',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            // Live Tiles Grid
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GridView.count(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.2,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Status Bar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildTile(
-                      icon: Icons.access_time,
-                      title: 'Saat',
-                      value: _time,
-                      color: Colors.deepPurple,
+                    Text(
+                      _time,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    _buildTile(
-                      icon: Icons.battery_std,
-                      title: 'Batareya',
-                      value: '$_battery%',
-                      color: Colors.green,
-                    ),
-                    _buildTile(
-                      icon: Icons.wifi,
-                      title: 'Şəbəkə',
-                      value: _network,
-                      color: Colors.blue,
-                    ),
-                    _buildTile(
-                      icon: Icons.calendar_today,
-                      title: 'Tarix',
-                      value: '${DateTime.now().day}/${DateTime.now().month}',
-                      color: Colors.orange,
-                    ),
-                    _buildTile(
-                      icon: Icons.settings,
-                      title: 'Ayarlar',
-                      value: '',
-                      color: Colors.grey,
-                    ),
-                    _buildTile(
-                      icon: Icons.phone_android,
-                      title: 'Sistem',
-                      value: 'metro_core',
-                      color: Colors.purple,
-                    ),
-                    _buildTile(
-                      icon: Icons.update,
-                      title: 'Yeniləmə',
-                      value: 'Yoxla',
-                      color: Colors.teal,
-                    ),
-                    _buildTile(
-                      icon: Icons.info,
-                      title: 'Haqqında',
-                      value: 'v1.0.0',
-                      color: Colors.indigo,
+                    Row(
+                      children: [
+                        Icon(
+                          _network == 'WiFi' ? Icons.wifi : Icons.signal_cellular_alt,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.battery_std,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '$_battery%',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+
+              // Live Tiles Grid - İndi Scroll edilir
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      _buildTile(
+                        icon: Icons.settings,
+                        title: 'settings_title',
+                        value: '',
+                        color: Colors.grey,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SettingsPage()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -150,11 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
     required String title,
     required String value,
     required Color color,
+    VoidCallback? onTap,
   }) {
     return GestureDetector(
-      onTap: () {
-        // Tile tıklanma əməliyyatları
-      },
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           color: color.withOpacity(0.2),

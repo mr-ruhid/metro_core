@@ -4,7 +4,7 @@
   <p><b>A modern, cross-platform operating system interface built with Flutter, designed to run on Linux-based devices.</b></p>
 
 <a href="https://github.com/ruhidjavadoff/metro-core">View Source Code</a> •
-<a href="#-how-to-build-linux--wsl">Installation Guide</a>
+<a href="#%EF%B8%8F-how-to-build-linux--wsl">Installation Guide</a>
 
 <br><br>
 
@@ -21,7 +21,7 @@
 
 ## 📜 About the Project
 
-**Metro Core** aims to provide a sleek, Windows Phone-inspired Modern UI with deep system integration. It bridges the gap between a beautiful frontend and low-level hardware control using **Dart FFI (Foreign Function Interface)** and **C++ native libraries**.
+**Metro Core** aims to provide a sleek, Windows Phone-inspired UI with deep system integration. It bridges the gap between a beautiful modern frontend and low-level hardware control using **Dart FFI (Foreign Function Interface)** and **C++ native libraries**.
 
 ---
 
@@ -35,8 +35,20 @@
 | 📊 **System Monitoring** | Real-time tracking of Battery, Storage, CPU, RAM, Network, and Time. |
 | 🚗 **Driving Mode** | Automotive integration infrastructure (Android Auto-like) using WebSockets. |
 | 📺 **Wireless Display** | WFD support for seamless screen mirroring and discovery. |
-| 🌐 **Multi-language Ready** | Built-in `i18n` support. All UI strings are stored as keys for instant localization. |
+| 🌐 **Multi-language Ready** | Built-in `i18n` support. All UI strings are stored as keys for easy localization. |
 | 📱 **Overflow Prevention** | Adaptive screens using `SafeArea` and flexible layouts to prevent bottom overflow errors. |
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|:---|:---|
+| **Frontend** | Flutter (Dart) |
+| **Backend / Native** | C++ (Compiled to `.so` shared libraries) |
+| **Integration** | `dart:ffi` for calling C++ functions directly from Dart |
+| **State Management** | Native Flutter State (StatefulWidgets) |
+| **Build System** | CMake for C++ libraries |
 
 ---
 
@@ -131,3 +143,30 @@ flutter run -d linux
 License: © 2026 Metro Core. All rights reserved.
 
 Contributing: Contributions are highly welcome! Feel free to open issues or pull requests to improve the system architecture, add new hardware integrations, or fix bugs.
+
+<div align="center">
+  <h2>🌟 Support & Donate</h2>
+  <p>If you appreciate the time and effort put into building this OS interface, consider supporting the development. Your motivation keeps this project alive!</p>
+
+  <br>
+
+  <!-- Main Badges -->
+  <a href="https://kofe.al/@ruhidjavadoff">
+    <img src="https://kofe.al/assets/images/kofeal-logo.svg" height="40" alt="Support on Kofe.al" style="background-color: white; padding: 5px; border-radius: 5px;">
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.paypal.com/paypalme/ruhidjavadoff">
+    <img src="https://img.shields.io/badge/Donate%20via-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate via PayPal" height="40">
+  </a>
+  
+  <br><br>
+
+  <!-- Additional Links in a clean list format -->
+  <p align="center">
+    ☕ <b>Kofe.al:</b> <a href="https://kofe.al/@ruhidjavadoff">@ruhidjavadoff</a> <br>
+    🍵 <b>Çayvoy:</b> <a href="https://cayvoy.com/donate/ruhid4715">ruhid4715</a> <br>
+    💳 <b>PayPal:</b> <code>ruhidjavadoff@gmail.com</code> <br>
+    🪙 <b>Crypto (USDT - BNB Smart Chain):</b> <br>
+    <code>0x9a4AD41762D6B07B8C266b312Cf0dBe31FAd890c</code>
+  </p>
+</div>

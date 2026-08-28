@@ -3,10 +3,10 @@
   <h1>📱 Metro Core OS</h1>
   <p><b>A modern, cross-platform operating system interface built with Flutter, designed to run on Linux-based devices.</b></p>
 
-<a href="https://github.com/ruhidjavadoff/metro-core">View Source Code</a> •
-<a href="#%EF%B8%8F-how-to-build-linux--wsl">Installation Guide</a>
+  <a href="https://github.com/ruhidjavadoff/metro-core">View Source Code</a> •
+  <a href="#how-to-build-linux--wsl">Installation Guide</a>
 
-<br><br>
+  <br><br>
 
   <p>
     <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"></a>
@@ -75,15 +75,15 @@ The system relies on several C++ shared libraries located in `/usr/local/lib/`. 
 
 The `SystemFFI` class (`lib/ffi/system_ffi.dart`) utilizes a smart `USE_MOCK` flag system for seamless development:
 
-*   🟢 **`USE_MOCK = true` (Default):** All hardware data is simulated. Perfect for UI development, UI/UX testing, and debugging on non-Linux machines without needing real hardware.
-*   🔴 **`USE_MOCK = false`:** The application attempts to load the real `.so` C++ libraries and fetch actual live system data.
+- 🟢 **`USE_MOCK = true` (Default):** All hardware data is simulated. Perfect for UI development, UI/UX testing, and debugging on non-Linux machines without needing real hardware.
+- 🔴 **`USE_MOCK = false`:** The application attempts to load the real `.so` C++ libraries and fetch actual live system data.
 
 ---
 
 ## 🛡️ Device Encryption & 🚗 Driving Mode
 
-*   **Encryption (`DeviceEncryptionService`):** Provides a UI for managing disk encryption (Linux LUKS). It connects to the `libsecurity.so` native library to check current encryption status, and allows users to enable or disable encryption (requires a PIN).
-*   **Driving Mode:** The project includes infrastructure for an Android Auto-like experience. The phone (Linux device) gathers data (music, GPS, notifications) via a C++ service (`phone_bridge.cpp`). The external display runs a Flutter UI (`driving_mode_page.dart`) that connects via WebSocket to the phone and renders the data.
+- **Encryption (`DeviceEncryptionService`):** Provides a UI for managing disk encryption (Linux LUKS). It connects to the `libsecurity.so` native library to check current encryption status, and allows users to enable or disable encryption (requires a PIN).
+- **Driving Mode:** The project includes infrastructure for an Android Auto-like experience. The phone (Linux device) gathers data (music, GPS, notifications) via a C++ service (`phone_bridge.cpp`). The external display runs a Flutter UI (`driving_mode_page.dart`) that connects via WebSocket to the phone and renders the data.
 
 ---
 
@@ -118,31 +118,50 @@ metro_core/
 │   └── (Native shared libraries are copied here)
 ├── pubspec.yaml
 └── README.md
-🛠️ How to Build (Linux / WSL)
-1. Install Dependencies
+```
+
+---
+
+## 🛠️ How to Build (Linux / WSL)
+
+### 1. Install Dependencies
+
 Install the required packages for building the C++ libraries:
 
-Bash
+```bash
 sudo apt update
 sudo apt install cmake make g++ nlohmann-json3-dev -y
-2. Build the Native Libraries
-Navigate to each native service directory (e.g., ~/system/services/battery) and compile:
+```
 
-Bash
+### 2. Build the Native Libraries
+
+Navigate to each native service directory (e.g., `~/system/services/battery`) and compile:
+
+```bash
 mkdir -p build && cd build
 cmake ..
 make
 sudo cp lib*.so /usr/local/lib/
-3. Run the Flutter App
+```
+
+### 3. Run the Flutter App
+
 Once libraries are built and placed correctly, run the application:
 
-Bash
+```bash
 flutter pub get
 flutter run -d linux
-📄 License & Contributing
-License: © 2026 Metro Core. All rights reserved.
+```
 
-Contributing: Contributions are highly welcome! Feel free to open issues or pull requests to improve the system architecture, add new hardware integrations, or fix bugs.
+---
+
+## 📄 License & Contributing
+
+**License:** © 2026 Metro Core. All rights reserved.
+
+**Contributing:** Contributions are highly welcome! Feel free to open issues or pull requests to improve the system architecture, add new hardware integrations, or fix bugs.
+
+---
 
 <div align="center">
   <h2>🌟 Support & Donate</h2>
@@ -150,7 +169,6 @@ Contributing: Contributions are highly welcome! Feel free to open issues or pull
 
   <br>
 
-  <!-- Main Badges -->
   <a href="https://kofe.al/@ruhidjavadoff">
     <img src="https://kofe.al/assets/images/kofeal-logo.svg" height="40" alt="Support on Kofe.al" style="background-color: white; padding: 5px; border-radius: 5px;">
   </a>
@@ -158,10 +176,9 @@ Contributing: Contributions are highly welcome! Feel free to open issues or pull
   <a href="https://www.paypal.com/paypalme/ruhidjavadoff">
     <img src="https://img.shields.io/badge/Donate%20via-PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate via PayPal" height="40">
   </a>
-  
+
   <br><br>
 
-  <!-- Additional Links in a clean list format -->
   <p align="center">
     ☕ <b>Kofe.al:</b> <a href="https://kofe.al/@ruhidjavadoff">@ruhidjavadoff</a> <br>
     🍵 <b>Çayvoy:</b> <a href="https://cayvoy.com/donate/ruhid4715">ruhid4715</a> <br>

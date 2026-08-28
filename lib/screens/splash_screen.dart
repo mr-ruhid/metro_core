@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'screens/welcome.dart';
-import 'screens/wifi.dart';
-import 'screens/update.dart';
-import 'screens/finish.dart';
-import 'home/home.dart';   // ← DÜZƏLDİ
 
 void main() {
   runApp(const MetroCore());
@@ -25,10 +20,6 @@ class MetroCore extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
-        '/wifi': (context) => const WifiScreen(),
-        '/update': (context) => const UpdateScreen(),
-        '/finish': (context) => const FinishScreen(),
         '/home': (context) => const HomeScreen(),
       },
     );
@@ -47,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(context, '/welcome');
+      Navigator.pushReplacementNamed(context, '/home');
     });
   }
 
@@ -58,6 +49,35 @@ class _SplashScreenState extends State<SplashScreen> {
         color: Colors.black,
         child: Center(
           child: Lottie.asset('assets/loading.json', width: 300, height: 300),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.black,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.phone_android, color: Colors.purple, size: 80),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                ),
+                child: const Icon(Icons.arrow_forward, color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,0 +1,3 @@
+/home/ruhid/projects/cellular/build/CMakeFiles/cellular_manager.dir
+/home/ruhid/projects/cellular/build/CMakeFiles/edit_cache.dir
+/home/ruhid/projects/cellular/build/CMakeFiles/rebuild_cache.dir

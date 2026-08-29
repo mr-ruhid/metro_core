@@ -1,0 +1,3 @@
+/home/ruhid/projects/wifi/build/CMakeFiles/wifi_manager.dir
+/home/ruhid/projects/wifi/build/CMakeFiles/edit_cache.dir
+/home/ruhid/projects/wifi/build/CMakeFiles/rebuild_cache.dir

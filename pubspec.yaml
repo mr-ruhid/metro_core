@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  provider: ^6.1.1
   lottie: ^2.0.0
   url_launcher: ^6.2.0
   flutter_svg: ^2.0.9
